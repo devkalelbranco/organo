@@ -10,7 +10,7 @@ const FormDefault = (props) => {
         event.preventDefault();
         
         props.onAddEmployee({
-            name, position, image, team: props.teams[0]
+            name, position, image, team
         })
 
         setName('')
