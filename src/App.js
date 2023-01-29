@@ -11,16 +11,22 @@ function App() {
     return employees === undefined ? [] : employees
   }
 
-  const setEmployeesApp = (employee) => {
+  const addEmployeesApp = (employee) => {
     const employessApp = [...employees, employee]
     window.localStorage.setItem("devkalelbranco.organo.employess", JSON.stringify(employessApp))
     return employessApp
+  }
+
+  const setEmployeesApp = (employees) => {
+    window.localStorage.setItem("devkalelbranco.organo.employess", JSON.stringify(employees))
+    setEmployees(employees)
+    return employees
   }
   
   const [employees, setEmployees] = useState(getEmployessFromSessionStorage());
 
   const addEmployee = (employee) => {
-    setEmployees(setEmployeesApp(employee))
+    setEmployees(addEmployeesApp(employee))
   }
 
 
@@ -62,6 +68,13 @@ function App() {
     },
   ]
 
+  const onRemoveEmployee = (employee) => {
+    const emps = employees.filter(item => item.name !== employee.name && item.position !== employee.position && item.team !== employee.team)
+    console.log(emps)
+
+    setEmployeesApp(emps)
+  }
+
   return (
     <div className="App">
       <Banner/>
@@ -72,7 +85,8 @@ function App() {
         name={team.name} 
         primaryColor={team.primaryColor} 
         secondaryColor={team.secondaryColor} 
-        employess={employees.filter(employee => employee.team === team.name)} />)}
+        employess={employees.filter(employee => employee.team === team.name)} 
+        onRemoveEmployee={onRemoveEmployee}/>)}
       
     </div>
   );
