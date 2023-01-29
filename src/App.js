@@ -5,12 +5,24 @@ import Team from './components/Team';
 
 
 function App() {
+  
+  const getEmployessFromSessionStorage = () => {
+    const employees = JSON.parse(window.localStorage.getItem("devkalelbranco.organo.employess")) || []
+    return employees === undefined ? [] : employees
+  }
 
-  const [employees, setEmployees] = useState([]);
+  const setEmployeesApp = (employee) => {
+    const employessApp = [...employees, employee]
+    window.localStorage.setItem("devkalelbranco.organo.employess", JSON.stringify(employessApp))
+    return employessApp
+  }
+  
+  const [employees, setEmployees] = useState(getEmployessFromSessionStorage());
 
   const addEmployee = (employee) => {
-    setEmployees([...employees, employee])
+    setEmployees(setEmployeesApp(employee))
   }
+
 
   const teams = [
     {
