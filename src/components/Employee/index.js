@@ -1,8 +1,15 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './Employee.css'
 
-const Employee = ({name, image, position, color}) => {
+const Employee = ({name, image, position, team, color, secondaryColor, onRemoveEmployee}) => {
+
+    const doRemoveEmployee = () => {
+        onRemoveEmployee({name, image, position, team})
+    }
+
     return (<div className="employee">
         <div style={{backgroundColor: color}} className="header" >
+            <button onClick={doRemoveEmployee} style={{backgroundColor: secondaryColor}} >X</button>
             <img alt={name} src={image} />
         </div>
         <div className="footer">

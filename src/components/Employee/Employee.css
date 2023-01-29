@@ -6,6 +6,21 @@
     background-color:  #F0F0F0;
     border-radius: 10px 10px 0px 0px;
 }
+.employee .header button {
+    margin-top: 5px;
+    margin-left: 240px;
+    color: #212121;
+    border: none;
+    border-radius: 40px;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+}
+
+.employee .header button:hover{
+    box-shadow: #212121;
+}
+
 .employee img {
     width: 100px;
     border-radius: 50%;
