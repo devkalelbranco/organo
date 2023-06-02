@@ -1,7 +1,9 @@
 import Banner from './components/Banner';
 import FormDefault from './components/FormDefault';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Team from './components/Team';
+import TeamService from './services/TeamService';
+import EmployeeService from './services/EmployeeService';
 
 
 function App() {
@@ -23,50 +25,11 @@ function App() {
     return employees
   }
   
-  const [employees, setEmployees] = useState(getEmployessFromSessionStorage());
+  const [employees, setEmployees] = useState([]);
 
   const addEmployee = (employee) => {
     setEmployees(addEmployeesApp(employee))
   }
-
-
-  const teams = [
-    {
-      name: 'Programação',
-      primaryColor: '#57C278',
-      secondaryColor: '#D9F7E9'
-    },
-    {
-      name: 'Front-End',
-      primaryColor: '#82CFFA',
-      secondaryColor: '#E8F8FF'
-    },
-    {
-      name: 'Data science',
-      primaryColor: '#A6D157',
-      secondaryColor: '#F0F8E2'
-    },
-    {
-      name: 'Devops',
-      primaryColor: '#E06B69',
-      secondaryColor: '#FDE7E8'
-    },
-    {
-      name: 'UX e Design',
-      primaryColor: '#D86EBF',
-      secondaryColor: '#FAE5F5'
-    },
-    {
-      name: 'Mobile',
-      primaryColor: '#FEBA05',
-      secondaryColor: '#FFF5D9'
-    },
-    {
-      name: 'Inovação e gestão',
-      primaryColor: '#FF8A29',
-      secondaryColor: '#FFEEDF'
-    },
-  ]
 
   const onRemoveEmployee = (employee) => {
     const emps = employees.filter(item => item.name !== employee.name && item.position !== employee.position && item.team !== employee.team)
@@ -74,6 +37,24 @@ function App() {
 
     setEmployeesApp(emps)
   }
+
+  const [teams, setTeams] = useState([]);
+
+  function init(){
+    let teamService = new TeamService();
+    teamService.get().then(res => {
+      res.json().then(res => setTeams(res))
+    });
+
+    let employeeService = new EmployeeService();
+    employeeService.get().then(res => {
+      res.json().then(res => setEmployees(res))
+    });
+  }
+
+  useEffect(() => { 
+    init();
+  }, []);
 
   return (
     <div className="App">
