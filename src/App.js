@@ -66,7 +66,7 @@ function App() {
         name={team.name} 
         primaryColor={team.primaryColor} 
         secondaryColor={team.secondaryColor} 
-        employess={employees.filter(employee => employee.team === team.name)} 
+        employess={employees.filter(employee => employee.team.name === team.name)} 
         onRemoveEmployee={onRemoveEmployee}/>)}
       
     </div>

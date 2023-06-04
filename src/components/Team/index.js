@@ -16,7 +16,7 @@ const Team = (props) => {
                     key={JSON.stringify(employee)} 
                     name={employee.name} 
                     position={employee.position} 
-                    image={employee.image} 
+                    imageURL={employee.imageURL} 
                     color={props.primaryColor}
                     team={props.name}
                     onRemoveEmployee={onRemoveEmployee}
