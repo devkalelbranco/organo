@@ -1,10 +1,10 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './Employee.css'
 
-const Employee = ({name, imageURL, position, team, color, secondaryColor, onRemoveEmployee}) => {
+const Employee = ({id, name, imageURL, position, team, color, secondaryColor, onRemoveEmployee}) => {
 
     const doRemoveEmployee = () => {
-        onRemoveEmployee({name, imageURL, position, team})
+        onRemoveEmployee({id, name, imageURL, position, team})
     }
 
     return (<div className="employee">

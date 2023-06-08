@@ -21,6 +21,13 @@ class EmployeeService{
             headers: {"Content-type": "Application/Json;charset=UTF-8"}
         })
     }
+
+    remove(employee){
+        return fetch(`${this.URLEmployees}/${employee.id}`,{
+            method: "DELETE",
+            headers: {"Content-type": "Application/Json;charset=UTF-8"}
+        });
+    }
 }
 
 export default EmployeeService;

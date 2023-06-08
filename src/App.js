@@ -10,12 +10,6 @@ function App() {
 
   const employeeService = new EmployeeService();
   const teamService = new TeamService();
-
-  const setEmployeesApp = (employees) => {
-    window.localStorage.setItem("devkalelbranco.organo.employess", JSON.stringify(employees))
-    setEmployees(employees)
-    return employees
-  }
   
   const [employees, setEmployees] = useState([]);
 
@@ -29,13 +23,14 @@ function App() {
   }
 
   const onRemoveEmployee = (employee) => {
-    const emps = employees.filter(item => item.name !== employee.name && item.position !== employee.position && item.team !== employee.team)
-    setEmployeesApp(emps)
+    employeeService.remove(employee).then(res => res.json().then((res) => {
+      const emps = employees.filter(item => item.id !== res.id)
+      setEmployees(emps);
+    }))
+
   }
 
-  const [teams, setTeams] = useState([]);
-
-  function init(){
+  const init = () => {
     teamService.get().then(res => {
       res.json().then(res => setTeams(res))
     });
@@ -45,6 +40,8 @@ function App() {
       res.json().then(res => setEmployees(res))
     });
   }
+
+  const [teams, setTeams] = useState([]);
 
   useEffect(() => { 
     init();

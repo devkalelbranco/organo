@@ -14,6 +14,7 @@ const Team = (props) => {
             <div className="employees">
                 {props.employess.map(employee => <Employee 
                     key={JSON.stringify(employee)} 
+                    id={employee.id}
                     name={employee.name} 
                     position={employee.position} 
                     imageURL={employee.imageURL} 
