@@ -10,7 +10,7 @@ const Employee = ({name, imageURL, position, team, color, secondaryColor, onRemo
     return (<div className="employee">
         <div style={{backgroundColor: color}} className="header" >
             <button onClick={doRemoveEmployee} style={{backgroundColor: secondaryColor}} >X</button>
-            <img alt={name} src={imageURL} />
+            <img alt={name} src={imageURL}/>
         </div>
         <div className="footer">
             <h4>{name}</h4>

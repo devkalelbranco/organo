@@ -1,14 +1,14 @@
 import ButtonDefault from "../ButtonDefault";
 import DropDown from "../DropDown";
 import InputText from "../InputText";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./FormDefault.css"
 
 const FormDefault = (props) => {
 
     const onSave = (event) => {
         event.preventDefault();
-        
+
         props.onAddEmployee({
             name, position, image, team
         })
@@ -16,13 +16,17 @@ const FormDefault = (props) => {
         setName('')
         setPosition('')
         setImage('')
-        setTeam(props.teams[0])
+        setTeam(props.teams[0].id)
     }
 
     const [name, setName] = useState('');
     const [position, setPosition] = useState('');
     const [image, setImage] = useState('');
-    const [team, setTeam] = useState('');
+    const [team, setTeam] = useState(props.teams.length > 0 ? props.teams[0].id : '');
+
+    useEffect(() => {
+        setTeam(team === '' ? props.teams.length > 0 ? props.teams[0].id : '' : team)
+    });
 
     return (
         <section className="form-default">

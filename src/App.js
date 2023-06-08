@@ -7,17 +7,9 @@ import EmployeeService from './services/EmployeeService';
 
 
 function App() {
-  
-  const getEmployessFromSessionStorage = () => {
-    const employees = JSON.parse(window.localStorage.getItem("devkalelbranco.organo.employess")) || []
-    return employees === undefined ? [] : employees
-  }
 
-  const addEmployeesApp = (employee) => {
-    const employessApp = [...employees, employee]
-    window.localStorage.setItem("devkalelbranco.organo.employess", JSON.stringify(employessApp))
-    return employessApp
-  }
+  const employeeService = new EmployeeService();
+  const teamService = new TeamService();
 
   const setEmployeesApp = (employees) => {
     window.localStorage.setItem("devkalelbranco.organo.employess", JSON.stringify(employees))
@@ -28,25 +20,27 @@ function App() {
   const [employees, setEmployees] = useState([]);
 
   const addEmployee = (employee) => {
-    setEmployees(addEmployeesApp(employee))
+    employeeService.create(employee).then((res) => { 
+      res.json().then(res => {
+        const emp = res;
+        setEmployees([...employees, emp])
+      });
+    })
   }
 
   const onRemoveEmployee = (employee) => {
     const emps = employees.filter(item => item.name !== employee.name && item.position !== employee.position && item.team !== employee.team)
-    console.log(emps)
-
     setEmployeesApp(emps)
   }
 
   const [teams, setTeams] = useState([]);
 
   function init(){
-    let teamService = new TeamService();
     teamService.get().then(res => {
       res.json().then(res => setTeams(res))
     });
 
-    let employeeService = new EmployeeService();
+    
     employeeService.get().then(res => {
       res.json().then(res => setEmployees(res))
     });
@@ -59,14 +53,14 @@ function App() {
   return (
     <div className="App">
       <Banner/>
-      <FormDefault teams={teams.map(team => team.name)} onAddEmployee={(employee) => addEmployee(employee)} />
+      <FormDefault teams={teams} onAddEmployee={(employee) => addEmployee(employee)} />
 
       {teams.map((team) => <Team 
         key={team.name}
         name={team.name} 
         primaryColor={team.primaryColor} 
         secondaryColor={team.secondaryColor} 
-        employess={employees.filter(employee => employee.team.name === team.name)} 
+        employess={employees.filter(employee => employee.team.id === team.id)} 
         onRemoveEmployee={onRemoveEmployee}/>)}
       
     </div>
